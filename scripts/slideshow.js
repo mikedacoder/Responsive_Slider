@@ -13,7 +13,7 @@ $(document).ready(function ($) {
 		
 		//Get values of the window height and width.
 		var windowWidth = window.innerWidth;
-		var windowHeight = window.innerHeight;
+		var windowHeight = window.innerHeight;		
 		
 		/*Finds all img type tags that are children
 	  of the element object passed in, passes them
@@ -26,15 +26,14 @@ $(document).ready(function ($) {
 			var slides = [];
 			
 			images = element.find('img');
-
+			
 			for (var i = 0; i < images.length; i++) {			
-				var image = images[i];		
-				image.id = "image" + (i + 1);														
-				slides.push(image);		
+				var image = images[i];																	
+				slides.push(image);				
 			}		
 			return slides;
 		}
-
+		
 		var images = getImages(slideshowLI);
 		var imageCount = images.length;		
 
@@ -57,16 +56,17 @@ $(document).ready(function ($) {
 		slideshowUL.css("position", "relative");
 		slideshowUL.css("width", slideshowWidth);
 		slideshowUL.css("list-style", "none");
-		//slideshowUL.css("left", (windowWidth));
+		slideshowUL.css("margin-left", -windowWidth);
 		
+		slideshowImage.css("margin-left", "5%");
 		if(windowWidth > windowHeight) {
 			slideshowImage.css("height", "100%");
 			slideshowImage.css("width", "auto");
-			slideshowImage.css("margin", "5% 10% 5% 5%");
+			slideshowImage.css("margin-right", "10.5%");			
 		} else {
 			slideshowImage.css("height", "auto");
 			slideshowImage.css("width", "80%");
-			slideshowImage.css("margin", "5% 12.5% 5% 5%");
+			slideshowImage.css("margin-right", "12.5%");			
 		}		
 		
 		slideshowLI.css("position", "relative");
@@ -96,7 +96,7 @@ $(document).ready(function ($) {
 		});
 		
 		//Create previous button and functionality
-		slideshow.prepend( "<div class='previous'><</div>" );
+		slideshow.append( "<div class='previous'><</div>" );
 		var previousButton = $(".previous");
 		previousButton.css("position", "fixed");
 		previousButton.css("top", "40%");
@@ -117,7 +117,7 @@ $(document).ready(function ($) {
 			}, 500, function(){
 					$(".slideshow ul li:last-child").prependTo(slideshowUL);
 					slideshowUL.css("left", "");					
-				});
+				});			
 		});
 		
 		
@@ -143,8 +143,24 @@ $(document).ready(function ($) {
 			}, 500, function(){
 				$(".slideshow ul li:first-child").appendTo(slideshowUL);
 				slideshowUL.css("left", "");				
-			});
-		});			
+			});			
+		});		
+		
+		//Straighten out remaining alignment issues.
+		for(var i = 0; i < slideshowLI.length; i++){			
+			//Check if the image is too tall
+			if(images[i].height > windowHeight){
+				images[i].style.height = "100%";
+				images[i].style.width = "auto";
+			}
+			//Check if the image is too wide
+			if(images[i].width > windowWidth){
+				images[i].style.height = "auto";
+				images[i].style.width = "100%";				
+			}			
+			//Vertically align all images
+			images[i].style.marginTop = (((windowHeight/2) - (images[i].height/2)) + "px");			
+		}		
 		
 	});
 	
