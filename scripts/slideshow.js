@@ -156,7 +156,7 @@ $(document).ready(function ($) {
 			//Check if the image is too wide
 			if(images[i].width > windowWidth){
 				images[i].style.height = "auto";
-				images[i].style.width = "100%";				
+				images[i].style.width = "70%";				
 			}			
 			//Vertically align all images
 			images[i].style.marginTop = (((windowHeight/2) - (images[i].height/2)) + "px");			
